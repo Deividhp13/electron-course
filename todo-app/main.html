@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>To-Do</title>
 </head>
+
 <body>
     <h1>Todo App</h1>
     <ul>
@@ -15,17 +17,23 @@
 
 
     <script>
-    const electron = require('electron');
-    const { ipcRenderer } = electron;
+        const electron = require('electron');
+        const { ipcRenderer } = electron;
+        const list = document.querySelector('ul');
 
-    ipcRenderer.on('todo:add', (event, todo) => {
-        const li = document.createElement('li');
-        const text = document.createTextNode(todo);
+        ipcRenderer.on('todo:add', (event, todo) => {
+            const li = document.createElement('li');
+            const text = document.createTextNode(todo);
 
 
-        li.appendChild(text);
-        document.querySelector('ul').appendChild(li);
-    });
+            li.appendChild(text);
+            list.appendChild(li);
+        });
+
+        ipcRenderer.on('todo:clear', () => {
+            list.innerHTML = "";
+        });
     </script>
 </body>
+
 </html>
